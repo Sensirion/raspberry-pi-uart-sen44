@@ -333,7 +333,7 @@ int16_t sen44_get_auto_cleaning_interval(uint32_t* interval) {
 int16_t sen44_get_article_code(unsigned char* article_code,
                                uint8_t article_code_size) {
     struct sensirion_shdlc_rx_header header;
-    uint8_t buffer[522];
+    uint8_t buffer[76];
     struct sensirion_shdlc_buffer frame;
     sensirion_shdlc_begin_frame(&frame, &buffer[0], 0xD0, SEN44_UART_ADDRESS,
                                 1);
@@ -347,7 +347,7 @@ int16_t sen44_get_article_code(unsigned char* article_code,
 
     sensirion_uart_hal_sleep_usec(20000);
 
-    error = sensirion_shdlc_rx_inplace(&frame, 255, &header);
+    error = sensirion_shdlc_rx_inplace(&frame, article_code_size, &header);
     if (error) {
         return error;
     }
@@ -358,7 +358,7 @@ int16_t sen44_get_article_code(unsigned char* article_code,
 int16_t sen44_get_serial_number(unsigned char* serial_number,
                                 uint8_t serial_number_size) {
     struct sensirion_shdlc_rx_header header;
-    uint8_t buffer[522];
+    uint8_t buffer[76];
     struct sensirion_shdlc_buffer frame;
     sensirion_shdlc_begin_frame(&frame, &buffer[0], 0xD0, SEN44_UART_ADDRESS,
                                 1);
@@ -372,7 +372,7 @@ int16_t sen44_get_serial_number(unsigned char* serial_number,
 
     sensirion_uart_hal_sleep_usec(20000);
 
-    error = sensirion_shdlc_rx_inplace(&frame, 255, &header);
+    error = sensirion_shdlc_rx_inplace(&frame, serial_number_size, &header);
     if (error) {
         return error;
     }
