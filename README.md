@@ -1,15 +1,30 @@
-Getting Started on Raspberry Pi
-===============================
+# Sensirion Raspberry Pi UART SEN44 Driver
 
-This document explains how to set up the SEN44 sensor module to run on a Raspberry Pi
-using the provided code.
+This document explains how to set up the SEN44 sensor module to run on a Raspberry Pi using the provided code.
 
-Setup Guide
------------
+<center><img src="images/SEN4x.png" width="500px"></center>
+
+## Setup Guide
 
 ### Connecting the Sensor
 
 Plug the provided USB cable into your Raspberry Pi.
+
+If you don't have a suitable cable at hand, please find the SEN44 pinout listed below:
+
+<center><img src="images/SEN44_pinout.png" width="300px"></center>
+
+| *Pin* | *Name* | *Description* | *Comments* |
+|-------|--------|---------------|------------|
+| 1     | VDD    | Supply Voltage | 5V ±10%
+| 2     | GND    | Ground |
+| 3     | RX     | UART: Receiving pin for communication | TTL 5V and LVTTL 3.3V compatible
+|       | SDA    | I2C: Serial data input / output | TTL 5V and LVTTL 3.3V compatible
+| 4     | TX     | UART: Transmission pin for communication | TTL 5V and LVTTL 3.3V compatible
+|       | SCL    | I2C: Serial clock input | TTL 5V and LVTTL 3.3V compatible
+| 5     | SEL    | Interface select | Leave floating or pull to VDD to select UART
+|       |        |  | Pull to GND to select I2C
+| 6     | NC     | Do not connect |
 
 ### Raspberry Pi
 
@@ -25,11 +40,11 @@ Plug the provided USB cable into your Raspberry Pi.
        ```
        rm -f sen44_uart_example_usage
        cc -Os -Wall -fstrict-aliasing -Wstrict-aliasing=1 -Wsign-conversion -fPIC -I. -o sen44_uart_example_usage sen44_uart.h sen44_uart.c sensirion_uart_hal.h sensirion_shdlc.h sensirion_shdlc.c \
-sensirion_uart_hal.c sensirion_config.h sensirion_common.h sensirion_common.c sen44_uart_example_usage.c
+        sensirion_uart_hal.c sensirion_config.h sensirion_common.h sensirion_common.c sen44_uart_example_usage.c
        ```
+
 - Test your connected sensor
-    - Run `./sen44_uart_example_usage` in the same directory you used to
-      compile the driver.
+    - Run `./sen44_uart_example_usage` in the same directory you used to compile the driver.
 
       Output:
       ```
